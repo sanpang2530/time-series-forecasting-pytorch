@@ -106,23 +106,23 @@ def execute_trade(prediction, current_price, amount=0.001, symbol='BTC/USDT'):
         if current_position == 'short':
             # 清空做空仓位
             print("清空做空仓位")
-            binance.create_market_buy_order(symbol, amount)
+            # binance.create_market_buy_order(symbol, amount)
             current_position = None
         if current_position is None:
             # 买入做多
             print(f"买入 {amount} BTC")
-            binance.create_market_buy_order(symbol, amount)
+            # binance.create_market_buy_order(symbol, amount)
             current_position = 'long'
     elif prediction < current_price:
         if current_position == 'long':
             # 清空做多仓位
             print("清空做多仓位")
-            binance.create_market_sell_order(symbol, amount)
+            # binance.create_market_sell_order(symbol, amount)
             current_position = None
         if current_position is None:
             # 卖出做空
             print(f"卖出 {amount} BTC")
-            binance.create_market_sell_order(symbol, amount)
+            # binance.create_market_sell_order(symbol, amount)
             current_position = 'short'
 
 
@@ -136,4 +136,5 @@ def trade():
     execute_trade(predicted_price, current_price)
 
 
-trade()
+if __name__ == '__main__':
+    trade()

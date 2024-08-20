@@ -16,4 +16,6 @@ pip install -r requirements.txt
 ## 安装notebook
 ```
 pip install notebook  
+
+jupyter notebook
 ```

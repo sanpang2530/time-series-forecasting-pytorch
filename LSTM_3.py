@@ -13,7 +13,7 @@ binance = ccxt.binance()
 
 
 # 获取BTC/USDT的历史数据
-def fetch_data(symbol='BTC/USDT', timeframe='1h', limit=500):
+def fetch_data(symbol='BTC/USDT', timeframe='15m', limit=500):
     ohlcv = binance.fetch_ohlcv(symbol, timeframe=timeframe, limit=limit)
     df = pd.DataFrame(ohlcv, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
     df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
@@ -97,7 +97,7 @@ criterion = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
 # 训练模型
-epochs = 10
+epochs = 100
 for epoch in range(epochs):
     for X_batch, y_batch in train_loader:
         optimizer.zero_grad()
@@ -111,7 +111,7 @@ for epoch in range(epochs):
 # 预测函数
 def predict(model, data, seq_length):
     model.eval()  # 设置模型为评估模式
-    data_seq = torch.tensor(data[-seq_length:, :-1].reshape(1, seq_length, -1), dtype=torch.float32)
+    data_seq = torch.tensor(data[-seq_length:, :].reshape(1, seq_length, -1), dtype=torch.float32)
 
     with torch.no_grad():  # 禁用梯度计算
         prediction = model(data_seq)

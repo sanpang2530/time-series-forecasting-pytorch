@@ -41,6 +41,7 @@ data = calculate_technical_indicators(data)
 
 # 数据归一化
 scaler = MinMaxScaler(feature_range=(-1, 1))
+# 检查是否正确生成所有特征
 data[['scaled_close', 'scaled_SMA', 'scaled_MACD', 'scaled_RSI', 'scaled_Upper_BB', 'scaled_Lower_BB',
       'scaled_Volume']] = scaler.fit_transform(
     data[['close', 'SMA', 'MACD', 'RSI', 'Upper_BB', 'Lower_BB', 'Volume']]
@@ -52,7 +53,8 @@ class TransformerModel(nn.Module):
     def __init__(self, input_size=7, d_model=64, nhead=8, num_layers=2, output_size=1):
         super(TransformerModel, self).__init__()
         self.embedding = nn.Linear(input_size, d_model)
-        encoder_layers = nn.TransformerEncoderLayer(d_model=d_model, nhead=nhead)
+        encoder_layers = nn.TransformerEncoderLayer(d_model=d_model, nhead=nhead,
+                                                    batch_first=True)  # 设置 batch_first=True
         self.transformer = nn.TransformerEncoder(encoder_layers, num_layers=num_layers)
         self.fc = nn.Linear(d_model, output_size)
 
@@ -71,7 +73,7 @@ model = TransformerModel()
 def create_sequences(data, seq_length):
     sequences = []
     for i in range(len(data) - seq_length):
-        seq = data[i:i + seq_length, :-1]
+        seq = data[i:i + seq_length, :]  # 使用所有特征，而不是丢弃最后一个
         label = data[i + seq_length, -1]
         sequences.append((seq, label))
     return np.array(sequences, dtype=object)

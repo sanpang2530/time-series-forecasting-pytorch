@@ -1,4 +1,10 @@
 # predict the closing price of the next trading day
+import numpy as np
+import torch
+from matplotlib import pyplot as plt
+from matplotlib.pyplot import figure
+
+from project import model, data_x_unseen, config, scaler, data_y_val, predicted_val, data_date
 
 model.eval()
 

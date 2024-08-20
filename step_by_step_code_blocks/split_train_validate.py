@@ -1,3 +1,10 @@
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib.pyplot import figure
+
+from project import normalized_data_close_price, config, data_date, num_data_points, scaler
+
+
 def prepare_data_x(x, window_size):
     # perform windowing
     n_row = x.shape[0] - window_size + 1

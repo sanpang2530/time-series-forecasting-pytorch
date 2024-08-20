@@ -1,4 +1,9 @@
 # prepare data for plotting the zoomed in view of the predicted prices (on validation set) vs. actual prices
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib.pyplot import figure
+
+from project import scaler, data_y_val, predicted_val, data_date, split_index, config
 
 to_plot_data_y_val_subset = scaler.inverse_transform(data_y_val)
 to_plot_predicted_val = scaler.inverse_transform(predicted_val)

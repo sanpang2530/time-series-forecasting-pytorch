@@ -1,3 +1,9 @@
+import numpy as np
+from torch.utils.data import DataLoader, Dataset
+
+from project import data_x_train, data_y_train, data_x_val, data_y_val, config
+
+
 class TimeSeriesDataset(Dataset):
     def __init__(self, x, y):
         x = np.expand_dims(x, 2) # in our case, we have only 1 feature, so we need to convert `x` into [batch, sequence, features] for LSTM

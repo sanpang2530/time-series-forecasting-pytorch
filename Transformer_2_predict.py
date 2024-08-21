@@ -2,6 +2,8 @@ import torch
 import requests
 import numpy as np
 
+from TransformerLibs import TransformerModel
+
 
 # 从币安API获取实时数据
 def fetch_binance_data():

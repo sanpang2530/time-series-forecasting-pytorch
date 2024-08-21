@@ -1,0 +1,6 @@
+ccxt==4.3.85
+torch==2.4.0
+gym==0.26.2
+pandas==2.2.2
+ta-lib==0.4.32
+schedule==1.1.0  # 定时任务

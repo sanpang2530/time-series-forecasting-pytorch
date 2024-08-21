@@ -58,4 +58,6 @@ def train_ppo():
     torch.save(model.state_dict(), 'data/saved_model.pth')
 
 if __name__ == '__main__':
+    # 初始化Binance客户端
+    binance = ccxt.binance()
     train_ppo()

@@ -1,6 +1,6 @@
 import ccxt
 import pandas as pd
-import ta
+import talib as ta  # 引入 TA-Lib 计算技术指标
 import torch
 """ 工具函数 (utils.py) """
 
@@ -19,9 +19,14 @@ def fetch_ohlcv(symbol, timeframe='1m', limit=100):
 
 def compute_indicators(df):
     """计算MACD和RSI指标"""
-    df['MACD'] = ta.trend.MACD(df['close']).macd()
-    df['MACD_signal'] = ta.trend.MACD(df['close']).macd_signal()
-    df['RSI'] = ta.momentum.RSIIndicator(df['close']).rsi()
+    df['SMA'] = ta.SMA(df['close'], timeperiod=14)
+    df['MACD'], df['MACD_signal'], df['MACD_hist'] = ta.MACD(df['close'], fastperiod=12, slowperiod=26, signalperiod=9)
+    df['RSI'] = ta.RSI(df['close'], timeperiod=14)
+    df['Upper_BB'], df['Middle_BB'], df['Lower_BB'] = ta.BBANDS(df['close'], timeperiod=20, nbdevup=2, nbdevdn=2)
+    df['Volume'] = df['volume']  # 引入成交量
+
+    # 处理缺失值
+    df.fillna(0, inplace=True)
     return df
 
 def save_model(model, path='data/saved_model.pth'):
